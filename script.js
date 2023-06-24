@@ -20,6 +20,7 @@ try {
   console.error('Error:', error);
 }
 }
+// fetchData(); // Uncomment this line if you want to use async/await
 
 function renderTable(data) {
   const tableBody = document.getElementById('tableBody');

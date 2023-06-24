@@ -1,80 +1,69 @@
+let data = [];
 
-function fetchDataWithThen() {
-  fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false')
-    .then(response => response.json())
-    .then(data => renderTable(data))
-    .catch(error => console.log(error));// Fetch data using .then
-}
+fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false')
+.then(response => response.json())
+.then(dataResponse => {
+  data = dataResponse;
+  renderTable(data);
+})
+.catch(error => {
+  console.error('Error:', error);
+});
 
-async function fetchDataWithAsyncAwait() {
-  try {
-    const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false');
-    const data = await response.json();
-    renderTable(data);
-  } catch (error) {
-    console.log(error);
 // Fetch data using async/await
-  }
+async function fetchData() {
+try {
+  const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false');
+  const data = await response.json();
+  renderTable(data);
+} catch (error) {
+  console.error('Error:', error);
+}
 }
 
 function renderTable(data) {
-  const tableBody = document.getElementById('cryptoTableBody');
+  const tableBody = document.getElementById('tableBody');
   tableBody.innerHTML = '';
 
-  data.forEach(coin => {
+  data.forEach(item => {
     const row = document.createElement('tr');
+    const percentageChange = item.price_change_percentage_24h;
+    const percentageChangeClass = percentageChange >= 0 ? 'positive-change' : 'negative-change';
+
     row.innerHTML = `
-      <td>${coin.symbol}</td>
-      <td>${coin.name}</td>
-      <td>${coin.current_price}</td>
-      <td>${coin.total_volume}</td>
+      <td id ="data1"><img src="${item.image}" alt="${item.name}" width="20"></td>
+      <td>${item.name}</td>
+      <td>${item.symbol}</td>
+      <td>${item.id}</td>
+      <td>${"$"+item.current_price}</td>
+      <td class="${percentageChangeClass}">${item.price_change_percentage_24h}%</td>
+      <td>${"Mkt Cap : $"+item.total_volume}</td>
     `;
+
+    row.classList.add('table-row-border');
     tableBody.appendChild(row);
-// Render the table with data
   });
 }
 
-
-function search() {
+document.getElementById('searchButton').addEventListener('click', () => {
   const searchInput = document.getElementById('searchInput');
   const searchTerm = searchInput.value.toLowerCase();
-  const tableRows = document.getElementById('cryptoTableBody').getElementsByTagName('tr');
 
-  for (let i = 0; i < tableRows.length; i++) {
-    const row = tableRows[i];
-    const symbol = row.getElementsByTagName('td')[0].textContent.toLowerCase();
-    const name = row.getElementsByTagName('td')[1].textContent.toLowerCase();
-// Search function
-    if (symbol.includes(searchTerm) || name.includes(searchTerm)) {
-      row.style.display = '';
-    } else {
-      row.style.display = 'none';
-    }
-  }
-}
-
-// Sort function
-function sortData(sortBy) {
-  const tableBody = document.getElementById('cryptoTableBody');
-  const rows = Array.from(tableBody.getElementsByTagName('tr'));
-
-  rows.sort((rowA, rowB) => {
-    let valueA, valueB;
-
- if (sortBy === 'percentage') {
-      valueA = parseFloat(rowA.getElementsByTagName('td')[3].textContent);
-      valueB = parseFloat(rowB.getElementsByTagName('td')[3].textContent);
-    } else if (sortBy === 'marketCap') {
-      valueA = parseFloat(rowA.getElementsByTagName('td')[4].textContent);
-      valueB = parseFloat(rowB.getElementsByTagName('td')[4].textContent);
-    }
-
-    return valueA - valueB;
+  const filteredData = data.filter(item => {
+    const itemName = item.name.toLowerCase();
+    const itemSymbol = item.symbol.toLowerCase();
+    return itemName.includes(searchTerm) || itemSymbol.includes(searchTerm);
   });
 
-  tableBody.innerHTML = '';
-  rows.forEach(row => tableBody.appendChild(row));
-}
+  renderTable(filteredData);
+});
 
-// Fetch data initially
-fetchDataWithThen();
+document.getElementById('sortMarketCapButton').addEventListener('click', () => {
+  data.sort((a, b) => b.total_volume - a.total_volume);
+  renderTable(data);
+  });
+
+document.getElementById('sortPercentageChangeButton').addEventListener('click', () => {
+  data.sort((a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h);
+  renderTable(data);
+});

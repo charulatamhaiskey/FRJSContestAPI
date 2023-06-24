@@ -1,36 +1,26 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Crypto Data</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="container">
-    <h1 class="title">Crypto Data</h1>
-    
-    <div class="search-container">
-      <input onclick="search()" type="text" class="search-input" id="searchInput" placeholder="Search By Name or Symbol">
-      <button onclick="sortData('marketCap')" class="sort-button">Sort by MKt Cap</button>
-      <button onclick="sortData('percentage')" class="sort-button">Sort by Percentage Change</button>
-      
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <div class="cont">
+      <input type="text" id="searchInput" placeholder="Search By Name Or Symbol"/>
+      <button id="searchButton">Search</button>
+
+      <button id="sortMarketCapButton">Sort by MKt Cap</button>
+      <button id="sortPercentageChangeButton">Sort by Percentage Change</button>
+
+      <table id="cryptoTable">
+        <tbody id="tableBody">
+          <!-- Table rows will be dynamically added here -->
+        </tbody>
+      </table>
     </div>
-
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Symbol</th>
-          <th>Name</th>
-          <th>Current Price</th>
-          <th>Total Volume</th>
-        </tr>
-      </thead>
-      <tbody id="cryptoTableBody">
-        <!-- Table rows will be added here -->
-      </tbody>
-    </table>
-  </div>
-
-  <script src="script.js"></script>
-</body>
+    <script src="./script.js"></script>
+  </body>
 </html>
-

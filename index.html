@@ -2,22 +2,35 @@
 <html>
 <head>
   <title>Crypto Data</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <input type="text" id="searchInput" placeholder="Search By Name or Symbol">
-  <button onclick="search()">Search</button>
-  <button onclick="sortData()">Sort By Mkt Cap</button>
-  <button onclick="sortData()">Sort by percentage</button>
-  <table id="cryptoTable">
-    <thead>
-      <tr>
-        <th>Symbol</th><th>Name</th><th>Current Price</th><th>Total Volume</th>
-      </tr>
-    </thead>
-    <tbody id="cryptoTableBody">
-    </tbody>
-  </table>
+  <div class="container">
+    <h1 class="title">Crypto Data</h1>
+    
+    <div class="search-container">
+      <input onclick="search()" type="text" class="search-input" id="searchInput" placeholder="Search By Name or Symbol">
+      <button onclick="sortData('marketCap')" class="sort-button">Sort by MKt Cap</button>
+      <button onclick="sortData('percentage')" class="sort-button">Sort by Percentage Change</button>
+      
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Symbol</th>
+          <th>Name</th>
+          <th>Current Price</th>
+          <th>Total Volume</th>
+        </tr>
+      </thead>
+      <tbody id="cryptoTableBody">
+        <!-- Table rows will be added here -->
+      </tbody>
+    </table>
+  </div>
 
   <script src="script.js"></script>
 </body>
 </html>
+

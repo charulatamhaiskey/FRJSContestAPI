@@ -1,18 +1,17 @@
-/* Styles for the Figma layout */
 body {
   background-color: black;
   color: white;
   text-align: center;
 }
-/* Styles for the search input and buttons */
-button {
-  border: 1px solid gray;
-  background-color: black;
-  color: white;
-  padding: 15px;
-  margin: 25px 5px;
-  border-radius: 10px;
+
+table {
+  border-collapse: collapse;
 }
+
+td {
+  border-bottom: 1px solid gray;
+}
+
 #searchInput {
   border: 1px solid gray;
   background-color: black;
@@ -23,14 +22,15 @@ button {
   border-radius: 10px;
 }
 
-/* Styles for the table */
-table {
-  border-collapse: collapse;
+button {
+  border: 1px solid gray;
+  background-color: black;
+  color: white;
+  padding: 15px;
+  margin: 25px 5px;
+  border-radius: 10px;
 }
 
-td {
-  border-bottom: 1px solid gray;
-}
 .positive-change {
   color: green !important;
 }
@@ -42,6 +42,7 @@ td {
 td {
   padding: 20px;
   text-align: left;
+  /* border-bottom: 2px solid gray */
 }
 #cryptoTable {
   margin: 0 auto;
@@ -50,4 +51,3 @@ td {
 #data1 {
   padding-right: 0;
 }
-
